@@ -1,30 +1,16 @@
 deck_guid = '32b98f'
+positions = {}
 
 function onLoad()
   deck = getObjectFromGUID(deck_guid)
   deck.shuffle()
   deck.deal(35)
-
 end
 
-function sortObjects(t)
-  for i,v in ipairs(t) do
-    -- print("I here is " .. i)
-    -- print("V here is " .. v["suit"] .. " and rank:" .. v["rank"])
-  end
-  table.sort(t, function(a, b)
-        if a.suit ~= b.suit then
-            return a.suit > b.suit
-        end
-
-        return a.rank < b.rank
-  end)
-  for i,v in ipairs(t) do
-    -- print("I part 2 here is " .. i)
-    -- print("V part 2 here is suit: " .. v["suit"] .. " and rank:" .. v["rank"])
-    -- print(" and id here is: " .. v["id"])
-
-  end
+function onChat(message, player)
+    if message == "count" then
+        showPlayerValues()
+    end
 end
 
 cardTable = { ["87954f"] = {rank = 1, suit = "S"},
@@ -88,15 +74,39 @@ cardTable = { ["87954f"] = {rank = 1, suit = "S"},
   ["ef31e3"] = {rank = 3, suit = "D"}
 }
 
-function convertItemToCard(cards)
+function sortObjects(t)
+  for i,v in ipairs(t) do
+    -- print("I here is " .. i)
+    -- print("V here is " .. v["suit"] .. " and rank:" .. v["rank"])
+  end
+  table.sort(t, function(a, b)
+        if a.suit ~= b.suit then
+            return a.suit > b.suit
+        end
+
+        return a.rank < b.rank
+  end)
+  for i,v in ipairs(t) do
+    -- print("I part 2 here is " .. i)
+    -- print("V part 2 here is suit: " .. v["suit"] .. " and rank:" .. v["rank"])
+    -- print(" and id here is: " .. v["id"])
+
+  end
+end
+
+
+function convertItemsToCards(cards)
 
   card_vals = {}
   for i,v in ipairs(cards) do
-    print("The value of v is " .. v .. " and converted: " .. cardTable[v].rank
-    .. " and suit " .. cardTable[v].suit)
+    guid = v.getGUID()
+    print("The value of v is " .. logString(v) .. " and guid is " .. guid)
     card = {}
-    table2 = {rank = cardTable[v].rank, suit = cardTable[v].suit, id = v}
+    table2 = {rank = cardTable[guid].rank, suit = cardTable[guid].suit, id = guid}
+    print("The rank here is " .. table2.rank .. " and the suit is " .. table2.suit .. " and the guid is " .. table2.id)
     table.insert(card_vals, table2)
+    print("The position here is " .. logString(v.getPosition()))
+    table.insert(positions, v.getPosition())
   end
   return card_vals
 end
@@ -105,18 +115,17 @@ function showPlayerValues()
     player_colors = getSeatedPlayers()
     for i, v in ipairs(player_colors) do
       print(v)
-      print("THe size here is " .. #Player[v].getHandObjects())
-      for j, w in ipairs(Player[v].getHandObjects(1)) do
-        print("The object here is " .. w)
+      handObjects = Player[v].getHandObjects(1)
+      print("THe size here is " .. #handObjects)
+      convertedItems = convertItemsToCards(handObjects)
+      sortObjects(convertedItems)
+      for j, w in ipairs(convertedItems) do
+        tempObject = getObjectFromGUID(w.id)
+        print("The old position here is " .. logString(tempObject.getPosition()))
+        print("The object here is " .. w.rank .. " and suit: " .. w.suit .. " and id: " .. w.id)
+        print("The new position here is " .. logString(positions[i]))
+        tempObject.setPosition(positions[j])
+
       end
     end
 end
-
--- t = { {rank = 1, suit = "S"}, {rank = 4, suit = "H"}}
-
-cards = {"aadb78", "ea4922", "2bf9a3", "365816", "006a6d", "afd292"}
-theValues = convertItemToCard(cards)
-
-showPlayerValues()
-
-sortObjects(theValues)
