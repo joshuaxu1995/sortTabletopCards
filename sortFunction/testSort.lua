@@ -1,4 +1,4 @@
-deck_guid = '32b98f'
+deck_guid = '559081'
 positions = {}
 
 function onLoad()
@@ -13,26 +13,7 @@ function onChat(message, player)
     end
 end
 
-cardTable = { ["87954f"] = {rank = 1, suit = "S"},
-  ["aadb78"] = {rank = 1, suit = "S"},
-  ["df9b3c"] = {rank = 1, suit = "S"},
-  ["a203cd"] = {rank = 1, suit = "S"},
-
-  ["afd292"] = {rank = 1, suit = "C"},
-  ["7a7e03"] = {rank = 1, suit = "C"},
-  ["b1a3dd"] = {rank = 1, suit = "C"},
-  ["e58649"] = {rank = 1, suit = "C"},
-
-  ["2bf9a3"] = {rank = 1, suit = "H"},
-  ["907473"] = {rank = 1, suit = "H"},
-  ["3d38b3"] = {rank = 1, suit = "H"},
-  ["c2ae9a"] = {rank = 1, suit = "H"},
-
-  ["8864f8"] = {rank = 1, suit = "D"},
-  ["3e9275"] = {rank = 1, suit = "D"},
-  ["7b1531"] = {rank = 1, suit = "D"},
-  ["8896ce"] = {rank = 1, suit = "D"},
-
+cardTable = {
 
   ["9a59d7"] = {rank = 2, suit = "S"},
   ["5c2e94"] = {rank = 2, suit = "S"},
@@ -115,7 +96,7 @@ cardTable = { ["87954f"] = {rank = 1, suit = "S"},
   ["9657c3"] = {rank = 5, suit = "D"},
   ["a7071e"] = {rank = 5, suit = "D"},
   ["5ae306"] = {rank = 5, suit = "D"},
-  ["2ce290"] = {rank = 5, suit = "D"}
+  ["2ce290"] = {rank = 5, suit = "D"},
 
 
   ["fc534d"] = {rank = 6, suit = "S"},
@@ -285,16 +266,35 @@ cardTable = { ["87954f"] = {rank = 1, suit = "S"},
   ["454a3b"] = {rank = 13, suit = "D"},
   ["40c960"] = {rank = 13, suit = "D"},
 
+  ["87954f"] = {rank = 14 suit = "S"},
+  ["aadb78"] = {rank = 14 suit = "S"},
+  ["df9b3c"] = {rank = 14 suit = "S"},
+  ["a203cd"] = {rank = 14 suit = "S"},
 
-  ["9c5978"] = {rank = 14, suit = "S"},
-  ["735965"] = {rank = 14, suit = "S"},
-  ["d4ddb3"] = {rank = 14, suit = "S"},
-  ["cdf3c5"] = {rank = 14, suit = "S"},
+  ["afd292"] = {rank = 14 suit = "C"},
+  ["7a7e03"] = {rank = 14 suit = "C"},
+  ["b1a3dd"] = {rank = 14 suit = "C"},
+  ["e58649"] = {rank = 14 suit = "C"},
 
-  ["7db4c9"] = {rank = 15, suit = "S"},
-  ["5c718e"] = {rank = 15, suit = "S"},
-  ["25551b"] = {rank = 15, suit = "S"},
-  ["be372e"] = {rank = 15, suit = "S"},
+  ["2bf9e3"] = {rank = 14 suit = "H"},
+  ["907473"] = {rank = 14 suit = "H"},
+  ["3d38b3"] = {rank = 14 suit = "H"},
+  ["c2ae9a"] = {rank = 14 suit = "H"},
+
+  ["8864f8"] = {rank = 14 suit = "D"},
+  ["3e9275"] = {rank = 14 suit = "D"},
+  ["7b1531"] = {rank = 14 suit = "D"},
+  ["8896ce"] = {rank = 14 suit = "D"},
+
+  ["9c5978"] = {rank = 15, suit = "A"},
+  ["735965"] = {rank = 15, suit = "A"},
+  ["d4ddb3"] = {rank = 15, suit = "A"},
+  ["cdf3c5"] = {rank = 15, suit = "A"},
+
+  ["7db4c9"] = {rank = 16, suit = "A"},
+  ["5c718e"] = {rank = 16, suit = "A"},
+  ["25551b"] = {rank = 16, suit = "A"},
+  ["be372e"] = {rank = 16, suit = "A"},
 
 }
 
