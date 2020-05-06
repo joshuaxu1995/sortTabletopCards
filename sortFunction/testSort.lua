@@ -1,7 +1,7 @@
 deck_guid = '559081'
 positions = {}
 
-function onLoad()
+function deal()
   deck = getObjectFromGUID(deck_guid)
   deck.shuffle()
   deck.deal(35)
@@ -10,6 +10,8 @@ end
 function onChat(message, player)
     if message == "count" then
         showPlayerValues()
+    elseif message == "deal" then
+        deal()
     end
 end
 
@@ -322,6 +324,7 @@ end
 function convertItemsToCards(cards, color)
 
   card_vals = {}
+  positions[color] = {}
   for i,v in ipairs(cards) do
     guid = v.getGUID()
     print("The value of v is " .. logString(v) .. " and guid is " .. guid)
@@ -330,9 +333,7 @@ function convertItemsToCards(cards, color)
     print("The rank here is " .. table2.rank .. " and the suit is " .. table2.suit .. " and the guid is " .. table2.id)
     table.insert(card_vals, table2)
     print("The position here is " .. logString(v.getPosition()))
-    local singlePositions = {}
-    table.insert(singlePositions, v.getPosition())
-    positions[color] = singlePositions
+    positions[color][i] = v.getPosition()
   end
   return card_vals
 end
