@@ -106,7 +106,7 @@ cardTable = {
 
   ["214f87"] = {rank = 6, suit = "C"},
   ["058114"] = {rank = 6, suit = "C"},
-  ["a6fd35"] = {rank = 6, suit = "C"},
+  ["a6fde5"] = {rank = 6, suit = "C"},
   ["dc0a44"] = {rank = 6, suit = "C"},
 
   ["4e064b"] = {rank = 6, suit = "H"},
@@ -121,7 +121,7 @@ cardTable = {
 
 
   ["d3c35a"] = {rank = 7, suit = "S"},
-  ["ddd3b0"] = {rank = 7, suit = "S"},
+  ["dddeb0"] = {rank = 7, suit = "S"},
   ["37f7cc"] = {rank = 7, suit = "S"},
   ["86aead"] = {rank = 7, suit = "S"},
 
@@ -319,7 +319,7 @@ function sortObjects(t)
 end
 
 
-function convertItemsToCards(cards)
+function convertItemsToCards(cards, color)
 
   card_vals = {}
   for i,v in ipairs(cards) do
@@ -330,7 +330,9 @@ function convertItemsToCards(cards)
     print("The rank here is " .. table2.rank .. " and the suit is " .. table2.suit .. " and the guid is " .. table2.id)
     table.insert(card_vals, table2)
     print("The position here is " .. logString(v.getPosition()))
-    table.insert(positions, v.getPosition())
+    local singlePositions = {}
+    table.insert(singlePositions, v.getPosition())
+    positions[color] = singlePositions
   end
   return card_vals
 end
@@ -341,14 +343,14 @@ function showPlayerValues()
       print(v)
       handObjects = Player[v].getHandObjects(1)
       print("THe size here is " .. #handObjects)
-      convertedItems = convertItemsToCards(handObjects)
+      convertedItems = convertItemsToCards(handObjects, v)
       sortObjects(convertedItems)
       for j, w in ipairs(convertedItems) do
         tempObject = getObjectFromGUID(w.id)
         print("The old position here is " .. logString(tempObject.getPosition()))
         print("The object here is " .. w.rank .. " and suit: " .. w.suit .. " and id: " .. w.id)
-        print("The new position here is " .. logString(positions[i]))
-        tempObject.setPosition(positions[j])
+        print("The new position here is " .. logString(positions[v][j]))
+        tempObject.setPosition(positions[v][j])
       end
     end
 end
