@@ -1,10 +1,18 @@
 deck_guid = '559081'
 positions = {}
+numCardsPerPlayer = {
+  [2] = 35,
+  [3] = 35,
+  [4] = 35,
+  [5] = 31,
+  [6] = 35,
+  [7] = 30
+}
 
 function deal()
   deck = getObjectFromGUID(deck_guid)
   deck.shuffle()
-  deck.deal(35)
+  deck.deal(numCardsPerPlayer[#Player.getPlayers()])
 end
 
 function onChat(message, player)
@@ -327,12 +335,12 @@ function convertItemsToCards(cards, color)
   positions[color] = {}
   for i,v in ipairs(cards) do
     guid = v.getGUID()
-    print("The value of v is " .. logString(v) .. " and guid is " .. guid)
+    -- print("The value of v is " .. logString(v) .. " and guid is " .. guid)
     card = {}
     table2 = {rank = cardTable[guid].rank, suit = cardTable[guid].suit, id = guid}
-    print("The rank here is " .. table2.rank .. " and the suit is " .. table2.suit .. " and the guid is " .. table2.id)
+    -- print("The rank here is " .. table2.rank .. " and the suit is " .. table2.suit .. " and the guid is " .. table2.id)
     table.insert(card_vals, table2)
-    print("The position here is " .. logString(v.getPosition()))
+    -- print("The position here is " .. logString(v.getPosition()))
     positions[color][i] = v.getPosition()
   end
   return card_vals
@@ -341,16 +349,16 @@ end
 function showPlayerValues()
     player_colors = getSeatedPlayers()
     for i, v in ipairs(player_colors) do
-      print(v)
+      -- print(v)
       handObjects = Player[v].getHandObjects(1)
-      print("THe size here is " .. #handObjects)
+      -- print("THe size here is " .. #handObjects)
       convertedItems = convertItemsToCards(handObjects, v)
       sortObjects(convertedItems)
       for j, w in ipairs(convertedItems) do
         tempObject = getObjectFromGUID(w.id)
-        print("The old position here is " .. logString(tempObject.getPosition()))
-        print("The object here is " .. w.rank .. " and suit: " .. w.suit .. " and id: " .. w.id)
-        print("The new position here is " .. logString(positions[v][j]))
+        -- print("The old position here is " .. logString(tempObject.getPosition()))
+        -- print("The object here is " .. w.rank .. " and suit: " .. w.suit .. " and id: " .. w.id)
+        -- print("The new position here is " .. logString(positions[v][j]))
         tempObject.setPosition(positions[v][j])
       end
     end
