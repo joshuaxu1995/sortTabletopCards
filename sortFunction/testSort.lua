@@ -122,13 +122,12 @@ cardTable = {
   ["4e064b"] = {rank = 6, suit = "H"},
   ["f5f9b9"] = {rank = 6, suit = "H"},
   ["e2ad10"] = {rank = 6, suit = "H"},
-  ["790e94"] = {rank = 6, suit = "H"},
+  ["187534"] = {rank = 6, suit = "H"},
 
   ["494072"] = {rank = 6, suit = "D"},
   ["b30126"] = {rank = 6, suit = "D"},
   ["20658f"] = {rank = 6, suit = "D"},
-  ["187534"] = {rank = 6, suit = "D"},
-
+  ["790e94"] = {rank = 6, suit = "D"},
 
   ["d3c35a"] = {rank = 7, suit = "S"},
   ["dddeb0"] = {rank = 7, suit = "S"},
