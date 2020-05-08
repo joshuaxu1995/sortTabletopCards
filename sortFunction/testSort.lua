@@ -1,6 +1,7 @@
 deck_guid = '559081'
 positions = {}
 numCardsPerPlayer = {
+  [1] = 35,
   [2] = 35,
   [3] = 35,
   [4] = 35,
@@ -16,7 +17,7 @@ function deal()
 end
 
 function onChat(message, player)
-    if message == "count" then
+    if message == "sort" then
         showPlayerValues()
     elseif message == "deal" then
         deal()
@@ -295,26 +296,53 @@ cardTable = {
   ["7b1531"] = {rank = 14, suit = "D"},
   ["8896ce"] = {rank = 14, suit = "D"},
 
-  ["9c5978"] = {rank = 15, suit = "A"},
-  ["735965"] = {rank = 15, suit = "A"},
-  ["d4ddb3"] = {rank = 15, suit = "A"},
-  ["cdf3c5"] = {rank = 15, suit = "A"},
+  ["9c5978"] = {rank = 15, suit = "J"},
+  ["735965"] = {rank = 15, suit = "J"},
+  ["d4ddb3"] = {rank = 15, suit = "J"},
+  ["cdf3c5"] = {rank = 15, suit = "J"},
 
-  ["7db4c9"] = {rank = 16, suit = "A"},
-  ["5c718e"] = {rank = 16, suit = "A"},
-  ["25551b"] = {rank = 16, suit = "A"},
-  ["be372e"] = {rank = 16, suit = "A"},
-
+  ["7db4c9"] = {rank = 16, suit = "J"},
+  ["5c718e"] = {rank = 16, suit = "J"},
+  ["25551b"] = {rank = 16, suit = "J"},
+  ["be372e"] = {rank = 16, suit = "J"},
 }
 
-function sortObjects(t)
+suitConversion = {
+  ["J"] = 6,
+  ["T"] = 5,
+  ["S"] = 4,
+  ["H"] = 3,
+  ["C"] = 2,
+  ["D"] = 1
+}
+
+function adjustCardForSorting(card, trumpSuit, trumpNumber)
+
+  if (card.rank == trumpNumber and card.rank == trumpNumber) then
+    card.suit = "T"
+    card.rank = 14.75
+  elseif (card.rank == trumpNumber) then
+    card.suit = "T"
+    card.rank = 14.5
+  elseif (card.suit == trumpSuit) then
+    card.suit = "T"
+  end
+  print("Method New rank: " .. card.rank .. " new suit: " .. card.suit)
+  return card
+
+end
+
+function sortObjects(t, trumpSuit, trumpNumber)
+
   for i,v in ipairs(t) do
     -- print("I here is " .. i)
     -- print("V here is " .. v["suit"] .. " and rank:" .. v["rank"])
+    v = adjustCardForSorting(v, trumpSuit, trumpNumber)
+    print("Sort New rank: " .. v.rank .. " new suit: " .. v.suit)
   end
   table.sort(t, function(a, b)
-        if a.suit ~= b.suit then
-            return a.suit > b.suit
+        if suitConversion[a.suit] ~= suitConversion[b.suit] then
+            return suitConversion[a.suit] < suitConversion[b.suit]
         end
 
         return a.rank < b.rank
@@ -352,7 +380,7 @@ function showPlayerValues()
       handObjects = Player[v].getHandObjects(1)
       -- print("THe size here is " .. #handObjects)
       convertedItems = convertItemsToCards(handObjects, v)
-      sortObjects(convertedItems)
+      sortObjects(convertedItems, "D", 3)
       for j, w in ipairs(convertedItems) do
         tempObject = getObjectFromGUID(w.id)
         -- print("The old position here is " .. logString(tempObject.getPosition()))
