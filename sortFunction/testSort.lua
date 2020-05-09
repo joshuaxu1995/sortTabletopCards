@@ -1,7 +1,7 @@
 deck_guid = '559081'
 positions = {}
 numCardsPerPlayer = {
-  [1] = 35,
+  [1] = 12,
   [2] = 35,
   [3] = 35,
   [4] = 35,
@@ -17,13 +17,24 @@ function deal()
 end
 
 function onChat(message, player)
-    if message == "sort" then
-        showPlayerValues()
-    elseif message == "deal" then
-        deal()
+    if message == "deal" then
+      deal()
+      local trumpRank = 0
+      local trumpSuit = ""
+      sortInitialHand(trumpRank, trumpSuit)
+    elseif string.len(message) == 3 then
+      global_trumpRank = tonumber(string.sub(message, 1, 2))
+      global_trumpSuit = string.sub(message, 3)
+      print("1: The trump rank here is " .. global_trumpRank .. " and the trump suit is " .. global_trumpSuit)
+      sortInitialHand(global_trumpSuit, global_trumpRank)
+    elseif string.len(message) == 2 then
+      print("hi")
+      global_trumpRank = tonumber(string.sub(message, 1, 1))
+      global_trumpSuit = string.sub(message, 2)
+      print(global_trumpRank .. "hi" .. global_trumpSuit)
+      sortInitialHand(global_trumpSuit, global_trumpRank)
     end
 end
-
 cardTable = {
 
   ["9a59d7"] = {rank = 2, suit = "S"},
@@ -120,14 +131,14 @@ cardTable = {
   ["a6fde5"] = {rank = 6, suit = "C"},
   ["dc0a44"] = {rank = 6, suit = "C"},
 
-  ["4e064b"] = {rank = 6, suit = "H"},
-  ["f5f9b9"] = {rank = 6, suit = "H"},
-  ["e2ad10"] = {rank = 6, suit = "H"},
+  ["494072"] = {rank = 6, suit = "H"},
+  ["b30126"] = {rank = 6, suit = "H"},
+  ["20658f"] = {rank = 6, suit = "H"},
   ["187534"] = {rank = 6, suit = "H"},
 
-  ["494072"] = {rank = 6, suit = "D"},
-  ["b30126"] = {rank = 6, suit = "D"},
-  ["20658f"] = {rank = 6, suit = "D"},
+  ["4e064b"] = {rank = 6, suit = "D"},
+  ["f5f9b9"] = {rank = 6, suit = "D"},
+  ["e2ad10"] = {rank = 6, suit = "D"},
   ["790e94"] = {rank = 6, suit = "D"},
 
   ["d3c35a"] = {rank = 7, suit = "S"},
@@ -296,15 +307,15 @@ cardTable = {
   ["7b1531"] = {rank = 14, suit = "D"},
   ["8896ce"] = {rank = 14, suit = "D"},
 
-  ["9c5978"] = {rank = 15, suit = "J"},
-  ["735965"] = {rank = 15, suit = "J"},
-  ["d4ddb3"] = {rank = 15, suit = "J"},
-  ["cdf3c5"] = {rank = 15, suit = "J"},
+  ["9c5978"] = {rank = 50, suit = "J"},
+  ["735965"] = {rank = 50, suit = "J"},
+  ["d4ddb3"] = {rank = 50, suit = "J"},
+  ["cdf3c5"] = {rank = 50, suit = "J"},
 
-  ["7db4c9"] = {rank = 16, suit = "J"},
-  ["5c718e"] = {rank = 16, suit = "J"},
-  ["25551b"] = {rank = 16, suit = "J"},
-  ["be372e"] = {rank = 16, suit = "J"},
+  ["7db4c9"] = {rank = 100, suit = "J"},
+  ["5c718e"] = {rank = 100, suit = "J"},
+  ["25551b"] = {rank = 100, suit = "J"},
+  ["be372e"] = {rank = 100, suit = "J"},
 }
 
 suitConversion = {
@@ -318,12 +329,16 @@ suitConversion = {
 
 function adjustCardForSorting(card, trumpSuit, trumpNumber)
 
-  if (card.rank == trumpNumber and card.rank == trumpNumber) then
+  print("The trumpSuit and trumpNumber are " .. trumpSuit .. " and " ..trumpNumber)
+  if (trumpNumber <= 0) then
+      return cards
+  end
+  if (card.rank == trumpNumber and card.suit == trumpSuit) then
     card.suit = "T"
-    card.rank = 14.75
+    card.rank = 20
   elseif (card.rank == trumpNumber) then
     card.suit = "T"
-    card.rank = 14.5
+    card.rank = 15
   elseif (card.suit == trumpSuit) then
     card.suit = "T"
   end
@@ -373,14 +388,14 @@ function convertItemsToCards(cards, color)
   return card_vals
 end
 
-function showPlayerValues()
+function sortInitialHand(trumpSuit, trumpHand)
     player_colors = getSeatedPlayers()
     for i, v in ipairs(player_colors) do
       -- print(v)
       handObjects = Player[v].getHandObjects(1)
       -- print("THe size here is " .. #handObjects)
       convertedItems = convertItemsToCards(handObjects, v)
-      sortObjects(convertedItems, "D", 3)
+      sortObjects(convertedItems, trumpSuit, trumpHand)
       for j, w in ipairs(convertedItems) do
         tempObject = getObjectFromGUID(w.id)
         -- print("The old position here is " .. logString(tempObject.getPosition()))
