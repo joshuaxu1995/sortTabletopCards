@@ -1,40 +1,51 @@
 deck_guid = '559081'
 positions = {}
 numCardsPerPlayer = {
-  [1] = 12,
-  [2] = 35,
-  [3] = 35,
-  [4] = 35,
-  [5] = 31,
-  [6] = 35,
-  [7] = 30
+  [1] = { deal = 35, claim = 6},
+  [2] = { deal = 35, claim = 6},
+  [3] = { deal = 34, claim = 6},
+  [4] = { deal = 26, claim = 4},
+  [5] = { deal = 31, claim = 7},
+  [6] = { deal = 35, claim = 6},
+  [7] = { deal = 30, claim = 6},
+  [8] = { deal = 26, claim = 7, discard = 2},
+  [9] = { deal = 23, claim = 7, discard = 2}
 }
 
 function deal()
   deck = getObjectFromGUID(deck_guid)
   deck.shuffle()
-  deck.deal(numCardsPerPlayer[#Player.getPlayers()])
+  deck.deal(numCardsPerPlayer[#Player.getPlayers()]["deal"])
 end
 
 function onChat(message, player)
+    print("The player here is " .. player.color)
     if message == "deal" then
       deal()
+    elseif message == "sort" then
       local trumpRank = 0
       local trumpSuit = ""
-      sortInitialHand(trumpRank, trumpSuit)
+      sortInitialHand(trumpSuit, trumpRank)
+    elseif message == "claim" then
+      print("Claiming here" .. numCardsPerPlayer[#Player.getPlayers()]["claim"] )
+      print("THe color here is " .. player.color)
+      deck = getObjectFromGUID(deck_guid)
+      deck.deal(numCardsPerPlayer[#Player.getPlayers()]["claim"], player.color)
     elseif string.len(message) == 3 then
       global_trumpRank = tonumber(string.sub(message, 1, 2))
-      global_trumpSuit = string.sub(message, 3)
+      global_trumpSuit = string.upper(string.sub(message, 3))
       print("1: The trump rank here is " .. global_trumpRank .. " and the trump suit is " .. global_trumpSuit)
       sortInitialHand(global_trumpSuit, global_trumpRank)
     elseif string.len(message) == 2 then
       print("hi")
       global_trumpRank = tonumber(string.sub(message, 1, 1))
-      global_trumpSuit = string.sub(message, 2)
+      global_trumpSuit = string.upper(string.sub(message, 2))
       print(global_trumpRank .. "hi" .. global_trumpSuit)
       sortInitialHand(global_trumpSuit, global_trumpRank)
     end
 end
+
+
 cardTable = {
 
   ["9a59d7"] = {rank = 2, suit = "S"},
@@ -329,9 +340,9 @@ suitConversion = {
 
 function adjustCardForSorting(card, trumpSuit, trumpNumber)
 
-  print("The trumpSuit and trumpNumber are " .. trumpSuit .. " and " ..trumpNumber)
-  if (trumpNumber <= 0) then
-      return cards
+  -- print("The trumpSuit and trumpNumber are " .. trumpSuit .. " and " ..trumpNumber)
+  if (tonumber(trumpNumber) <= 0) then
+      return card
   end
   if (card.rank == trumpNumber and card.suit == trumpSuit) then
     card.suit = "T"
@@ -342,7 +353,7 @@ function adjustCardForSorting(card, trumpSuit, trumpNumber)
   elseif (card.suit == trumpSuit) then
     card.suit = "T"
   end
-  print("Method New rank: " .. card.rank .. " new suit: " .. card.suit)
+  -- print("Method New rank: " .. card.rank .. " new suit: " .. card.suit)
   return card
 
 end
@@ -353,7 +364,7 @@ function sortObjects(t, trumpSuit, trumpNumber)
     -- print("I here is " .. i)
     -- print("V here is " .. v["suit"] .. " and rank:" .. v["rank"])
     v = adjustCardForSorting(v, trumpSuit, trumpNumber)
-    print("Sort New rank: " .. v.rank .. " new suit: " .. v.suit)
+    -- print("Sort New rank: " .. v.rank .. " new suit: " .. v.suit)
   end
   table.sort(t, function(a, b)
         if suitConversion[a.suit] ~= suitConversion[b.suit] then
