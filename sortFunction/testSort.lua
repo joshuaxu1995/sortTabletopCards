@@ -19,6 +19,7 @@ end
 function onChat(message, player)
     if message == "deal" then
       deal()
+    elseif message== "sort" then
       local trumpRank = 0
       local trumpSuit = ""
       sortInitialHand(trumpRank, trumpSuit)
@@ -35,6 +36,8 @@ function onChat(message, player)
       sortInitialHand(global_trumpSuit, global_trumpRank)
     end
 end
+
+
 cardTable = {
 
   ["9a59d7"] = {rank = 2, suit = "S"},
@@ -330,7 +333,7 @@ suitConversion = {
 function adjustCardForSorting(card, trumpSuit, trumpNumber)
 
   print("The trumpSuit and trumpNumber are " .. trumpSuit .. " and " ..trumpNumber)
-  if (trumpNumber <= 0) then
+  if (toNumber(trumpNumber) <= 0) then
       return cards
   end
   if (card.rank == trumpNumber and card.suit == trumpSuit) then
