@@ -333,8 +333,8 @@ suitConversion = {
 function adjustCardForSorting(card, trumpSuit, trumpNumber)
 
   print("The trumpSuit and trumpNumber are " .. trumpSuit .. " and " ..trumpNumber)
-  if (toNumber(trumpNumber) <= 0) then
-      return cards
+  if (tonumber(trumpNumber) <= 0) then
+      return card
   end
   if (card.rank == trumpNumber and card.suit == trumpSuit) then
     card.suit = "T"
