@@ -1,13 +1,15 @@
 deck_guid = '559081'
 positions = {}
 numCardsPerPlayer = {
-  [1] = { deal = 12, claim = 6},
+  [1] = { deal = 35, claim = 6},
   [2] = { deal = 35, claim = 6},
-  [3] = { deal = 35, claim = 6},
-  [4] = { deal = 35, claim = 6},
-  [5] = { deal = 31, claim = 6},
+  [3] = { deal = 34, claim = 6},
+  [4] = { deal = 26, claim = 4},
+  [5] = { deal = 31, claim = 7},
   [6] = { deal = 35, claim = 6},
-  [7] = { deal = 30, claim = 6}
+  [7] = { deal = 30, claim = 6},
+  [8] = { deal = 26, claim = 7, discard = 2},
+  [9] = { deal = 23, claim = 7, discard = 2}
 }
 
 function deal()
