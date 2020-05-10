@@ -31,9 +31,9 @@ function onChat(message, player)
       print("THe color here is " .. player.color)
       deck = getObjectFromGUID(deck_guid)
       deck.deal(numCardsPerPlayer[#Player.getPlayers()]["claim"], player.color)
-      blindfoldAllPlayersExceptClaim(player.color, true)
+      setBlindfoldAllPlayersExceptClaim(player.color, true)
     elseif message == "ready" then
-      blindfoldAllPlayersExceptClaim(player.color, false)
+      setBlindfoldAllPlayersExceptClaim(player.color, false)
     elseif string.len(message) == 3 then
       global_trumpRank = tonumber(string.sub(message, 1, 2))
       global_trumpSuit = string.upper(string.sub(message, 3))
