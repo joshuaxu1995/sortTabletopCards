@@ -323,10 +323,10 @@ cardTable = {
   ["d4ddb3"] = {rank = 50, suit = "J"},
   ["cdf3c5"] = {rank = 50, suit = "J"},
 
-  ["7db4c9"] = {rank = 100, suit = "J"},
-  ["5c718e"] = {rank = 100, suit = "J"},
-  ["25551b"] = {rank = 100, suit = "J"},
-  ["be372e"] = {rank = 100, suit = "J"},
+  ["3ee299"] = {rank = 100, suit = "J"},
+  ["174bc6"] = {rank = 100, suit = "J"},
+  ["7e7b27"] = {rank = 100, suit = "J"},
+  ["999f5a"] = {rank = 100, suit = "J"},
 }
 
 suitConversion = {
@@ -346,10 +346,11 @@ function adjustCardForSorting(card, trumpSuit, trumpNumber)
   end
   if (card.rank == trumpNumber and card.suit == trumpSuit) then
     card.suit = "T"
-    card.rank = 20
+    card.rank = 30
   elseif (card.rank == trumpNumber) then
+    oldSuit = card.suit
+    card.rank = 15 + suitConversion[oldSuit]
     card.suit = "T"
-    card.rank = 15
   elseif (card.suit == trumpSuit) then
     card.suit = "T"
   end
