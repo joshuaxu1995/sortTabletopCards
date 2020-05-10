@@ -338,6 +338,20 @@ suitConversion = {
   ["D"] = 1
 }
 
+function blindFoldAllPlayers(origPlayer)
+  allPlayers = Player.getPlayers()
+  for i,v in ipairs(allPlayers) do
+    print("The player color here is " .. v.color)
+    if (v.color == origPlayer.color)
+      print("The color here is the same color: " .. v.color)
+    else then
+      print("The orig color: " .. origPlayer.color " is diff from new color " .. v.color)
+      v.blindfolded = true
+    end
+  end
+end
+
+
 function adjustCardForSorting(card, trumpSuit, trumpNumber)
 
   -- print("The trumpSuit and trumpNumber are " .. trumpSuit .. " and " ..trumpNumber)
