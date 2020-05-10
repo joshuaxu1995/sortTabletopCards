@@ -31,7 +31,9 @@ function onChat(message, player)
       print("THe color here is " .. player.color)
       deck = getObjectFromGUID(deck_guid)
       deck.deal(numCardsPerPlayer[#Player.getPlayers()]["claim"], player.color)
-      blindfoldAllPlayersExceptClaim(player.color)
+      blindfoldAllPlayersExceptClaim(player.color, true)
+    elseif message == "ready" then
+      blindfoldAllPlayersExceptClaim(player.color, false)
     elseif string.len(message) == 3 then
       global_trumpRank = tonumber(string.sub(message, 1, 2))
       global_trumpSuit = string.upper(string.sub(message, 3))
@@ -339,7 +341,7 @@ suitConversion = {
   ["D"] = 1
 }
 
-function blindfoldAllPlayersExceptClaim(origPlayerColor)
+function setBlindfoldAllPlayersExceptClaim(origPlayerColor, state)
   allPlayers = Player.getPlayers()
   for i,v in ipairs(allPlayers) do
     print("The player color here is " .. v.color)
@@ -347,7 +349,7 @@ function blindfoldAllPlayersExceptClaim(origPlayerColor)
       print("The color here is the same color: " .. v.color)
     else then
       print("The orig color: " .. origPlayerColor .. " is diff from new color " .. v.color)
-      v.blindfolded = true
+      v.blindfolded = state
     end
   end
 end
