@@ -345,9 +345,9 @@ function setBlindfoldAllPlayersExceptClaim(origPlayerColor, state)
   allPlayers = Player.getPlayers()
   for i,v in ipairs(allPlayers) do
     print("The player color here is " .. v.color)
-    if (v.color == origPlayerColor)
+    if (v.color == origPlayerColor) then
       print("The color here is the same color: " .. v.color)
-    else then
+    else 
       print("The orig color: " .. origPlayerColor .. " is diff from new color " .. v.color)
       v.blindfolded = state
     end
