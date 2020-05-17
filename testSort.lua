@@ -6,7 +6,7 @@ numCardsPerPlayer = {
   [3] = { deal = 34, claim = 6},
   [4] = { deal = 26, claim = 4},
   [5] = { deal = 31, claim = 7},
-  [6] = { deal = 35, claim = 6},
+  [6] = { deal = 26, claim = 6},
   [7] = { deal = 30, claim = 6},
   [8] = { deal = 26, claim = 7, discard = 2},
   [9] = { deal = 23, claim = 7, discard = 2}
@@ -37,13 +37,15 @@ function onChat(message, player)
     elseif string.len(message) == 3 then
       global_trumpRank = tonumber(string.sub(message, 1, 2))
       global_trumpSuit = string.upper(string.sub(message, 3))
-      print("1: The trump rank here is " .. global_trumpRank .. " and the trump suit is " .. global_trumpSuit)
+      -- print("1: The trump rank here is " .. global_trumpRank .. " and the trump suit is " .. global_trumpSuit)
+      adjustTrumpOrder(global_trumpSuit)
       sortInitialHand(global_trumpSuit, global_trumpRank)
     elseif string.len(message) == 2 then
       print("hi")
       global_trumpRank = tonumber(string.sub(message, 1, 1))
       global_trumpSuit = string.upper(string.sub(message, 2))
-      print(global_trumpRank .. "hi" .. global_trumpSuit)
+      -- print(global_trumpRank .. "hi" .. global_trumpSuit)
+      adjustTrumpOrder(global_trumpSuit)
       sortInitialHand(global_trumpSuit, global_trumpRank)
     end
 end
@@ -333,13 +335,35 @@ cardTable = {
 }
 
 suitConversion = {
-  ["J"] = 6,
-  ["T"] = 5,
-  ["S"] = 4,
-  ["H"] = 3,
-  ["C"] = 2,
-  ["D"] = 1
+  ["J"] = 12,
+  ["T"] = 10,
 }
+
+function adjustTrumpOrder(global_trumpSuit)
+  if (global_trumpSuit == "C") then
+    suitConversion["C"] = 8
+    suitConversion["H"] = 6
+    suitConversion["S"] = 4
+    suitConversion["D"] = 2
+  elseif (global_trumpSuit == "D") then
+    suitConversion["D"] = 8
+    suitConversion["S"] = 6
+    suitConversion["H"] = 4
+    suitConversion["C"] = 2
+  elseif (global_trumpSuit == "H") then
+    suitConversion["H"] = 8
+    suitConversion["S"] = 6
+    suitConversion["D"] = 4
+    suitConversion["C"] = 2
+  elseif (global_trumpSuit == "S") then
+    suitConversion["S"] = 8
+    suitConversion["H"] = 6
+    suitConversion["C"] = 4
+    suitConversion["D"] = 2
+  else
+    print("The suit conversions here are all wrong")
+  end
+end
 
 function setBlindfoldAllPlayersExceptClaim(origPlayerColor, state)
   allPlayers = Player.getPlayers()
@@ -347,7 +371,7 @@ function setBlindfoldAllPlayersExceptClaim(origPlayerColor, state)
     print("The player color here is " .. v.color)
     if (v.color == origPlayerColor) then
       print("The color here is the same color: " .. v.color)
-    else 
+    else
       print("The orig color: " .. origPlayerColor .. " is diff from new color " .. v.color)
       v.blindfolded = state
     end
