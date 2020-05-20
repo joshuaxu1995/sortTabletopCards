@@ -337,6 +337,10 @@ cardTable = {
 suitConversion = {
   ["J"] = 12,
   ["T"] = 10,
+  ["S"] = 8,
+  ["H"] = 6,
+  ["C"] = 4,
+  ["D"] = 2
 }
 
 function adjustTrumpOrder(global_trumpSuit)
