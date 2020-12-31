@@ -446,7 +446,7 @@ function convertItemsToCards(cards, color)
 end
 
 function sortInitialHand(trumpSuit, trumpHand)
-    player_colors = getSeatedPlayers()
+    player_colors = Player.getPlayers()
     for i, v in ipairs(player_colors) do
       -- print(v)
       handObjects = Player[v].getHandObjects(1)
