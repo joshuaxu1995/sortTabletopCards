@@ -335,8 +335,8 @@ cardTable = {
 }
 
 suitConversion = {
-  ["J"] = 12,
-  ["T"] = 10,
+  ["J"] = 7, -- Move joker to suit value 7 to make it no longer at the end.
+  ["T"] = 7, -- Move trump to suit value 7 to make it not at the end.
   ["S"] = 8,
   ["H"] = 6,
   ["C"] = 4,
@@ -345,22 +345,22 @@ suitConversion = {
 
 function adjustTrumpOrder(global_trumpSuit)
   if (global_trumpSuit == "C") then
-    suitConversion["C"] = 5
+    suitConversion["C"] = 8
     suitConversion["H"] = 6
     suitConversion["S"] = 4
     suitConversion["D"] = 2
   elseif (global_trumpSuit == "D") then
-    suitConversion["D"] = 5
+    suitConversion["D"] = 8
     suitConversion["S"] = 6
     suitConversion["H"] = 4
     suitConversion["C"] = 2
   elseif (global_trumpSuit == "H") then
-    suitConversion["H"] = 5
+    suitConversion["H"] = 8
     suitConversion["S"] = 6
     suitConversion["D"] = 4
     suitConversion["C"] = 2
   elseif (global_trumpSuit == "S") then
-    suitConversion["S"] = 5
+    suitConversion["S"] = 8
     suitConversion["H"] = 6
     suitConversion["C"] = 4
     suitConversion["D"] = 2
@@ -370,6 +370,8 @@ function adjustTrumpOrder(global_trumpSuit)
   
   randomValue = math.random(2)
   if (randomValue == 1) then
+    suitConversion["C"] = suitConversion["C"] * -1
+    suitConversion["C"] = suitConversion["C"] * -1
     suitConversion["C"] = suitConversion["C"] * -1
     suitConversion["H"] = suitConversion["H"] * -1
     suitConversion["S"] = suitConversion["S"] * -1
