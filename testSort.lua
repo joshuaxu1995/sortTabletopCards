@@ -367,6 +367,14 @@ function adjustTrumpOrder(global_trumpSuit)
   else
     print("The suit conversions here are all wrong")
   end
+  
+  randomValue = math.random(2)
+  if (randomValue == 1) then
+    suitConversion["C"] = suitConversion["C"] * -1
+    suitConversion["H"] = suitConversion["H"] * -1
+    suitConversion["S"] = suitConversion["S"] * -1
+    suitConversion["D"] = suitConversion["D"] * -1
+  end
 end
 
 function setBlindfoldAllPlayersExceptClaim(origPlayerColor, state)
