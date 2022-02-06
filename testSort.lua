@@ -366,17 +366,7 @@ function adjustTrumpOrder(global_trumpSuit)
     suitConversion["D"] = 2
   else
     print("The suit conversions here are all wrong")
-  end
-  
-  randomValue = math.random(2)
-  if (randomValue == 1) then
-    suitConversion["C"] = suitConversion["C"] * -1
-    suitConversion["C"] = suitConversion["C"] * -1
-    suitConversion["C"] = suitConversion["C"] * -1
-    suitConversion["H"] = suitConversion["H"] * -1
-    suitConversion["S"] = suitConversion["S"] * -1
-    suitConversion["D"] = suitConversion["D"] * -1
-  end
+  end  
 end
 
 function setBlindfoldAllPlayersExceptClaim(origPlayerColor, state)
@@ -422,19 +412,37 @@ function sortObjects(t, trumpSuit, trumpNumber)
     v = adjustCardForSorting(v, trumpSuit, trumpNumber)
     -- print("Sort New rank: " .. v.rank .. " new suit: " .. v.suit)
   end
-  table.sort(t, function(a, b)
-        if suitConversion[a.suit] ~= suitConversion[b.suit] then
-            return suitConversion[a.suit] < suitConversion[b.suit]
-        end
+  
+  randomValue = math.random(2)
+  
+  if randomValue == 1 then
+    table.sort(t, normalOrder)
+  else
+    table.sort(t, reverseOrder)
+  end
 
-        return a.rank < b.rank
-  end)
   for i,v in ipairs(t) do
     -- print("I part 2 here is " .. i)
     -- print("V part 2 here is suit: " .. v["suit"] .. " and rank:" .. v["rank"])
     -- print(" and id here is: " .. v["id"])
 
   end
+end
+
+function normalOrder(a, b)
+  if suitConversion[a.suit] ~= suitConversion[b.suit] then
+      return suitConversion[a.suit] < suitConversion[b.suit]
+  end
+
+  return a.rank < b.rank
+end
+
+function reverseOrder(a, b)
+  if suitConversion[a.suit] ~= suitConversion[b.suit] then
+      return suitConversion[a.suit] > suitConversion[b.suit]
+  end
+
+  return a.rank > b.rank
 end
 
 
