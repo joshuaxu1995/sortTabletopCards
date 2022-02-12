@@ -335,7 +335,7 @@ cardTable = {
 }
 
 suitConversion = {
-  ["J"] = 12,
+  ["J"] = 7,
   ["T"] = 10,
   ["S"] = 8,
   ["H"] = 6,
@@ -391,15 +391,16 @@ function adjustCardForSorting(card, trumpSuit, trumpNumber)
   end
   if (card.rank == trumpNumber and card.suit == trumpSuit) then
     card.suit = "T"
-    card.rank = 30
+    card.rank = -30
   elseif (card.rank == trumpNumber) then
     oldSuit = card.suit
-    card.rank = 15 + suitConversion[oldSuit]
+    card.rank = -(15 + suitConversion[oldSuit])
     card.suit = "T"
   elseif (card.suit == trumpSuit) then
     card.suit = "T"
+    card.rank = -math.abs(card.rank)
   end
-  -- print("Method New rank: " .. card.rank .. " new suit: " .. card.suit)
+  print("Method New rank: " .. card.rank .. " new suit: " .. card.suit)
   return card
 
 end
