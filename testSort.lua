@@ -415,6 +415,8 @@ function sortObjects(t, trumpSuit, trumpNumber)
   
   randomValue = math.random(2)
   
+  print("Printing random value" .. randomValue)
+  
   if randomValue == 1 then
     table.sort(t, normalOrder)
   else
