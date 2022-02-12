@@ -345,25 +345,25 @@ suitConversion = {
 
 function adjustTrumpOrder(global_trumpSuit)
   if (global_trumpSuit == "C") then
-    suitConversion["C"] = 8
-    suitConversion["H"] = 6
-    suitConversion["S"] = 4
-    suitConversion["D"] = 2
-  elseif (global_trumpSuit == "D") then
-    suitConversion["D"] = 8
-    suitConversion["S"] = 6
-    suitConversion["H"] = 4
-    suitConversion["C"] = 2
-  elseif (global_trumpSuit == "H") then
     suitConversion["H"] = 8
-    suitConversion["S"] = 6
+    suitConversion["C"] = 6
     suitConversion["D"] = 4
-    suitConversion["C"] = 2
-  elseif (global_trumpSuit == "S") then
+    suitConversion["S"] = 2
+  elseif (global_trumpSuit == "D") then
+    suitConversion["S"] = 8
+    suitConversion["D"] = 6
+    suitConversion["C"] = 4
+    suitConversion["H"] = 2
+  elseif (global_trumpSuit == "H") then
     suitConversion["S"] = 8
     suitConversion["H"] = 6
     suitConversion["C"] = 4
     suitConversion["D"] = 2
+  elseif (global_trumpSuit == "S") then
+    suitConversion["H"] = 8
+    suitConversion["S"] = 6
+    suitConversion["D"] = 4
+    suitConversion["C"] = 2
   else
     print("The suit conversions here are all wrong")
   end  
