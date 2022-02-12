@@ -399,6 +399,8 @@ function adjustCardForSorting(card, trumpSuit, trumpNumber)
   elseif (card.suit == trumpSuit) then
     card.suit = "T"
     card.rank = -math.abs(card.rank)
+  elseif (card.suit == "J") then
+    card.rank = -math.abs(card.rank)
   end
   -- print("Method New rank: " .. card.rank .. " new suit: " .. card.suit)
   return card
