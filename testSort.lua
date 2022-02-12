@@ -400,7 +400,7 @@ function adjustCardForSorting(card, trumpSuit, trumpNumber)
     card.suit = "T"
     card.rank = -math.abs(card.rank)
   end
-  print("Method New rank: " .. card.rank .. " new suit: " .. card.suit)
+  -- print("Method New rank: " .. card.rank .. " new suit: " .. card.suit)
   return card
 
 end
